@@ -1,8 +1,9 @@
 //Tester of file weatherService.js
-const {weatherService} = require('./services/weatherService')
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') })
+const { weatherService } = require('./services/weatherService')
 
-async function test(){
-    const data = await weatherService('London')
+async function test() {
+    const data = await weatherService('london')
     console.log(data)
 }
 
