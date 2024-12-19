@@ -1,6 +1,8 @@
-require('dotenv').config();
+//Base of everything
+import {app} from "./server.js"
 
-const apiKey = process.env.WEATHER_API_KEY
-const teste = process.env.teste
 
-console.log(process.env.WEATHER_API_KEY)
+
+app.listen(8080, ()=>{
+    console.log("Server running http://localhost:8080")
+})
