@@ -1,6 +1,8 @@
 //This file config the connection with Database
 const mongoose = require('mongoose')
-require('dotenv').config({path: require('path').resolve(__dirname,  '../env')})
+require('dotenv').config()
+
+const uri = process.env.URI 
 
 const connectDB = async ()=>{
     try {
@@ -10,8 +12,9 @@ const connectDB = async ()=>{
         })
         console.log("Database Connected")
     } catch (error) {
-        console.log(error)
+        console.log(`Erro: ${error}`)
     }
+    console.log(uri)
 }
-
+connectDB()
 module.exports = {connectDB}

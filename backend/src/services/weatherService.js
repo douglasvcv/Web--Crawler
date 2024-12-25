@@ -21,7 +21,7 @@ async function weatherService(location){
         console.error("Error fetching weather data: ", error.message)    
     }
 }
-
+weatherService("london")
 module.exports = {
     weatherService,
 }
