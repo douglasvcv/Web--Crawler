@@ -2,7 +2,7 @@ import { connectDB } from '../config/db.js'
 
 
 
-async function CreateWeatherData() {
+async function InsertWeatherData() {
     try {
         
     } catch (error) {
