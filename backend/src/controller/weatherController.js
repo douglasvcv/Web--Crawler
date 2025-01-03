@@ -1,12 +1,12 @@
 //This file is response for controller the datas of api weatherService.js
-const { weatherService } = require("../services/weatherService.js")
-const { connectDB } = require('../config/db.js')
-const { default: mongoose } = require("mongoose")
+import { weatherService } from "../services/weatherService.js"
+import { connectDB } from '../config/db.js'
+import { mongoose } from "mongoose"
 
 
 const collectionName = 'weather'
 
-const GetWeatherData = async (req, res) => {
+export const GetWeatherData = async (req, res) => {
     try {
         const location = req.query.location || 'London';
         const weatherData = weatherService(location)
@@ -38,4 +38,5 @@ const InsertWeatherData = async () => {
         console.log("Database disconnected")
     }
 }
-module.exports = GetWeatherData
+
+

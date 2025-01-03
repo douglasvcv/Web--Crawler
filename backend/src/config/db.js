@@ -1,11 +1,12 @@
 //This file config the connection with Database
-const mongoose = require('mongoose')
-require('dotenv').config()
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const uri = process.env.URI 
 
 
-const connectDB = async ()=>{
+export const connectDB = async ()=>{
     try {
         await mongoose.connect(`${process.env.URI}`, {
             useNewUrlParser: true,
@@ -19,5 +20,4 @@ const connectDB = async ()=>{
     }
     console.log(uri)
 }
-connectDB()
-module.exports = {connectDB}
+

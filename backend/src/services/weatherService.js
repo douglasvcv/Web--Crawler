@@ -1,8 +1,9 @@
 //Base of request api Weather with Axios
-const axios = require('axios')
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') })
+import axios from 'axios'
+import dotenv from 'dotenv';
+dotenv.config()
 
-async function weatherService(location){
+export async function weatherService(location){
     console.log("API Key:", process.env.WEATHER_API_KEY)
     try {
         const apiKey = process.env.WEATHER_API_KEY
@@ -21,7 +22,4 @@ async function weatherService(location){
         console.error("Error fetching weather data: ", error.message)    
     }
 }
-weatherService("london")
-module.exports = {
-    weatherService,
-}
+
