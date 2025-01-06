@@ -1,15 +1,28 @@
-import { mongo, mongoose } from "mongoose"
+import { mongoose } from "mongoose"
 import { connectDB } from "../config/db"
 
+const dbName = 'webcrawler'
 const collectionName = 'weather'
 
-const GetWeatherData = async ()=>{
+const GetMongoData = async (req, res)=>{
+    const location = req.query.location || 'London'
+
     try {
         connectDB()
-        const collection = mongoose.connection.db.collection(collectionName)
-        
+        const db = mongoose.db(dbName)
+        const collection = db.collection(collectionName)
+        const result = collection.find({name: location}).toArray()
+        if(!result){
+            console.log("Dados não encontrados no banco de dados. Inserindo diretamente da api")
+            InsertWeatherData()
+        }
+        console.log(result)
+        return res.status(200).json(result)
+
     } catch (error) {
-        
+        console.error(error)
+    }finally{
+        mongoose
     }
 }
 
