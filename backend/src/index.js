@@ -2,9 +2,10 @@
 import {app} from "./server.js"
 
 import {GetWeatherData} from "./controller/weatherController.js"
+import {weatherService} from './services/weatherService.js'
 
-app.get('/', (req, res)=>{
-    GetWeatherData()
+app.get('/', async (req, res)=>{
+    GetWeatherData(req, res)
 })
 
 app.listen(8080, ()=>{

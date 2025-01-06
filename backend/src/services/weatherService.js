@@ -15,7 +15,7 @@ export async function weatherService(location){
                 q: location
             }
         })
-
+        console.log(response.data)
         return response.data
     } catch (error) {
        
@@ -23,3 +23,4 @@ export async function weatherService(location){
     }
 }
 
+weatherService('london')
