@@ -1,29 +1,29 @@
-import { mongoose } from "mongoose"
-import { connectDB } from "../config/db"
+import dotenv from 'dotenv'
+import { MongoClient } from "mongodb"
+import { weatherService } from "../services/weatherService.js"
+import { findMongoData } from '../services/mongoService.js'
 
 const dbName = 'webcrawler'
 const collectionName = 'weather'
 
 const GetMongoData = async (req, res)=>{
     const location = req.query.location || 'London'
-
-    try {
-        connectDB()
-        const db = mongoose.db(dbName)
-        const collection = db.collection(collectionName)
-        const result = collection.find({name: location}).toArray()
-        if(!result){
-            console.log("Dados não encontrados no banco de dados. Inserindo diretamente da api")
-            InsertWeatherData()
-        }
-        console.log(result)
-        return res.status(200).json(result)
-
-    } catch (error) {
-        console.error(error)
-    }finally{
-        mongoose
-    }
+    const uri = process.env.URI
+    const client = new MongoClient(uri)
+  try {
+    client.connect()
+    console.log("Connect MongoDB database!")
+    const db = client.db("webcrawler")
+    const collection = db.collection("weather")
+     const findData = findMongoData()
+     if(findData){
+        
+     }
+  } catch (error) {
+    
+  }
+    
+      
 }
 
 const InsertWeatherData = async () => {
@@ -45,3 +45,6 @@ const InsertWeatherData = async () => {
         console.log("Database disconnected")
     }
 }
+
+export {GetMongoData}
+export {InsertWeatherData}

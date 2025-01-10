@@ -1,23 +1,18 @@
 //This file config the connection with Database
-import mongoose from 'mongoose'
+import {MongoClient} from 'mongodb'
 import dotenv from 'dotenv'
-dotenv.config()
 
-const uri = process.env.URI 
-
-
-export const connectDB = async ()=>{
+async function connectDB(){
+    const uri = process.env.URI
+    const mongo = new MongoClient(uri)
     try {
-        await mongoose.connect(`${process.env.URI}`, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        console.log("Database Connected")
-
-       
+        mongo.connect()
+        console.log("MongoDB Connected!")
     } catch (error) {
-        console.log(`Erro: ${error}`)
+        console.error(error)
+    }finally{
+        mongo.close
     }
-    console.log(uri)
 }
 
+export {connectDB}

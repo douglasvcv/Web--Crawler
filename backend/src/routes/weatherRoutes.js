@@ -1,11 +1,13 @@
 //Routes of my server
+import { GetMongoData } from '../controller/dbController.js'
+import { InsertWeatherData } from '../controller/dbController.js'
 
 import {Router} from 'express'
 
 export const Rotas = Router()
 
 Rotas.get('/', (req, res)=>{
-    res.send("Home page!")
+    GetMongoData(req, res)
 })
 
 //Rota para mostrar a requisição de alguma cidade

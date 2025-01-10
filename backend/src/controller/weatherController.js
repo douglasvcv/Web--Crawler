@@ -15,15 +15,7 @@ export const GetWeatherData = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch weather data" })
     }
 }
-const MongoWeatherData = async () =>{
-    try {
-        connectDB()
-        const collection = mongoose.connection.db.collection(collectionName)
-        
-    } catch (error) {
-        
-    }
-}
+
 
 
 
