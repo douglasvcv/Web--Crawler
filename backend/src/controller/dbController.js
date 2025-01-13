@@ -16,14 +16,14 @@ const GetMongoData = async (req, res)=>{
     const db = client.db("webcrawler")
     const collection = db.collection("weather")
      const findData = findMongoData()
-     if(findData){
-        
+     if(!findData){
+        console.log("Requisisão mal-sucedida!")
      }
   } catch (error) {
-    
-  }
-    
-      
+    console.error(error)
+  }finally{
+    client.close()
+  }    
 }
 
 const InsertWeatherData = async () => {

@@ -2,17 +2,22 @@
 import { GetMongoData } from '../controller/dbController.js'
 import { InsertWeatherData } from '../controller/dbController.js'
 
+
 import {Router} from 'express'
 
 export const Rotas = Router()
 
-Rotas.get('/', (req, res)=>{
-    GetMongoData(req, res)
+Rotas.get('/teste', (req, res)=>{
+    res.send("teste")
 })
 
 //Rota para mostrar a requisição de alguma cidade
 Rotas.get('/previsao', (req, res)=>{
-    res.send('Get weather data')
+    if(GetMongoData){
+
+        GetMongoData(req, res)
+    }
+    res.send("Bad request")
 })
 
 //Rota para criar a previsão no banco de dados caso os dados tenha sidos requiridos da api
