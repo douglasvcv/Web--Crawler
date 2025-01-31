@@ -23,4 +23,3 @@ export async function weatherService(location){
     }
 }
 
-weatherService('london')

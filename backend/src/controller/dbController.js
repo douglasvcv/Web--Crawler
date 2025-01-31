@@ -3,76 +3,55 @@ import { MongoClient } from "mongodb"
 import { weatherService } from "../services/weatherService.js"
 import { findMongoData } from '../services/mongoService.js'
 
+const collectionName = 'weather'
+const db = 'webcrawler'
 
-<<<<<<< HEAD
-const InsertWeatherData = async (data) => {
-=======
-const GetMongoData = async (req, res)=>{
-    const location = req.query.location || 'London'
-    const uri = process.env.URI
-    const client = new MongoClient(uri)
-  try {
-    client.connect()
-    console.log("Connect MongoDB database!")
-    const db = client.db("webcrawler")
-    const collection = db.collection("weather")
-     const findData = findMongoData()
-     if(!findData){
-        console.log("Requisisão mal-sucedida!")
-     }
-  } catch (error) {
-    console.error(error)
-  }finally{
-    client.close()
-  }    
-}
+const client = new MongoClient(process.env.URI)
 
-const InsertWeatherData = async () => {
->>>>>>> 601cf9fbd60522243b98b6129c40dea83a341ac3
+const InsertWeatherData = async (nameLocation) => {
     try {
-        connectDB()
-        const collection = mongoose.connection.db.collection(collectionName)
-        const data = weatherService(data)
-        if (Array.isArray(data)) {
-            const result = await collection.insertMany(data)
-            console.log("Insert data inside MongoDb")
+        const database = client.db(db)
+        const collection = database.collection(collectionName)
+        const data = weatherService(nameLocation)
+        if (data) {
+            const insertData = collection.insertOne(data)
+            return insertData
         } else {
-            const result = await collection.insertOne(data)
-            console.log("Insert data inside MongoDb")
+            console.log("Something was wrong")
         }
     } catch (error) {
         console.error("Error: ", error)
     } finally {
-        await mongoose.disconnect()
+        await client.close()
         console.log("Database disconnected")
     }
 }
 
 
-const GetMongoData = async (req, res)=>{
-    const location = req.query.location || 'London'
-    const uri = process.env.URI
-    const client = new MongoClient(uri)
-  try {
-    client.connect()
-    console.log("Connect MongoDB database!")
-    const db = client.db("webcrawler")
-    const collection = db.collection("weather")
-     const findData = findMongoData(collection, {name: location})
-     if(findData.length == 0){
-     const apiData =   weatherService(location)
-     if(apiData){
-        InsertWeatherData(apiData)
-     }
-     }
-  } catch (error) {
-    
-  }
-    
-      
+const GetMongoData = async (req, res) => {
+    const location = req.query.location || 'brazil'
+    try {
+        client.connect()
+        console.log("Connect MongoDB database!")
+        const db = client.db("webcrawler")
+        const collection = db.collection("weather")
+        const findData = findMongoData(collection, { name: location })
+        if (findData.length == 0) {
+            const apiData = weatherService(location)
+            if (!apiData) {
+                console.log('Request name is invalid')
+            }
+            InsertWeatherData(apiData)
+            return apiData
+        }
+    } catch (error) {
+        console.log('Error get name', error)
+    }
+
+
 }
 
 
 
-export {GetMongoData}
-export {InsertWeatherData}
+export { GetMongoData }
+export { InsertWeatherData }
