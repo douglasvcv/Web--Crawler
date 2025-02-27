@@ -1,21 +1,21 @@
 //Base of request api Weather with Axios
 import axios from 'axios'
-import dotenv from 'dotenv';
-dotenv.config()
+import dotenv from 'dotenv/config.js';
+
 
 export async function weatherService(location){
-    console.log("API Key:", process.env.WEATHER_API_KEY)
+   
     try {
         const apiKey = process.env.WEATHER_API_KEY
         const baseUrl = 'http://api.weatherapi.com/v1/'
-        
         const response = await axios.get(`${baseUrl}current.json`, {
             params: {
                 key: apiKey,
                 q: location
             }
         })
-        console.log(response.data)
+        
+
         return response.data
     } catch (error) {
        
@@ -23,3 +23,4 @@ export async function weatherService(location){
     }
 }
 
+weatherService('london')

@@ -1,21 +1,23 @@
 //Routes of my server
 import { GetMongoData } from '../controller/dbController.js'
-import { GetWeatherData } from '../controller/weatherController.js'
-
+// import { GetWeatherData } from '../controller/weatherController.js'
+import express from 'express'
 import { InsertWeatherData } from '../controller/dbController.js'
-import {Router} from 'express'
+import {json, Router} from 'express'
 import { weatherService } from '../services/weatherService.js'
 
 export const Rotas = Router()
 
-Rotas.get('/', (req, res)=>{
-    weatherService('london')
+Rotas.use(express.json())
+
+Rotas.get('/', async (req, res)=>{
+    const data = await weatherService("london")
+    res.status(200).json(data)
 })
 
 //Rota para mostrar a requisição de alguma cidade
 Rotas.get('/previsao', (req, res)=>{
     if(GetMongoData){
-
         GetMongoData(req, res)
     }
     res.send("Bad request")

@@ -1,7 +1,7 @@
 //Base of everything
 import {Rotas} from "./routes/weatherRoutes.js"
 import express from 'express'
-import {GetWeatherData} from "./controller/weatherController.js"
+// import {GetWeatherData} from "./controller/weatherController.js"
 import {weatherService} from './services/weatherService.js'
 import { app } from "./server.js"
 
